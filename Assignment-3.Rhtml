@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Title</title>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js">
+</script>
+
+</head>
+
+<body>
+<div id="myDiv"></div>
+
+<script>
+Plotly.d3.csv("Edata.csv",data=>{
+var fData={}
+    fData.rate1=data.map(d=>+d.rate1);
+    fData.trial1=data.map(d=> d.trial1);
+    fData.rate2=data.map(d=>+d.rate2);
+    fData.Error1=data.map(d=>+d.Error1);
+    fData.Error2=data.map(d=>+d.Error2);
+    console.log(fData)
+
+var trace1={
+x: fData.trial1,
+y: fData.rate1,
+name:'Drug',
+
+error_y:{
+type:'data',
+array: fData.Error1,
+visible: true
+},
+type:'bar'
+
+};
+
+var trace2={
+x: fData.trial1,
+y: fData.rate2,
+name:'Placebo',
+error_y:{
+type:'data',
+array: fData.Error2,
+visible: true
+},
+type:'bar'
+
+};
+var data=[trace1, trace2];
+var layout={barmode:'group'};
+
+Plotly.newPlot('myDiv', data, layout);
+})
+
+</script>
+
+</body>
+</html>
